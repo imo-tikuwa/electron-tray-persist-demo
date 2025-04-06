@@ -47,6 +47,16 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
+  app.on('second-instance', () => {
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore()
+    }
+    if (!mainWindow.isVisible()) {
+      mainWindow.show()
+    }
+    mainWindow.focus()
+  })
+
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
