@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain, Tray, Menu } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, Tray, Menu, Notification } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -36,6 +36,12 @@ function createWindow(): void {
   mainWindow.on('close', (e) => {
     e.preventDefault()
     mainWindow.hide()
+
+    new Notification({
+      title: 'アプリはバックグラウンドで動作中です',
+      body: 'ウィンドウはタスクトレイから再表示できます。完全に終了したい場合はタスクトレイのアイコン右クリックから「アプリを終了」でできます。',
+      icon: icon
+    }).show()
   })
 
   mainWindow.on('ready-to-show', () => {
