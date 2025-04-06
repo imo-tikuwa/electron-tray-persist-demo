@@ -54,6 +54,11 @@ function createWindow(): void {
   }
 }
 
+if (!app.requestSingleInstanceLock()) {
+  console.error('Another instance is running.')
+  app.exit(0)
+}
+
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.electron')
 
