@@ -31,6 +31,7 @@ function createWindow(): void {
     }
   ])
   tray.setContextMenu(trayMenu)
+  tray.on('click', () => mainWindow.show())
 
   mainWindow.on('close', (e) => {
     e.preventDefault()
