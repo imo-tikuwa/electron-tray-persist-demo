@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, Tray, Menu } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -15,6 +15,22 @@ function createWindow(): void {
       sandbox: false
     }
   })
+
+  const tray = new Tray(icon)
+  const trayMenu = Menu.buildFromTemplate([
+    {
+      label: 'アプリを表示',
+      click: (): void => mainWindow.show()
+    },
+    {
+      label: 'アプリを終了',
+      click: (): void => {
+        tray.destroy()
+        app.exit(0)
+      }
+    }
+  ])
+  tray.setContextMenu(trayMenu)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
